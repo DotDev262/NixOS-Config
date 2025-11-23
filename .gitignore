@@ -1,0 +1,28 @@
+# Nix build results
+result
+*.drv
+*.lock   # optionally ignore temporary locks, flake.lock is tracked
+
+# Nix store paths (sometimes generated in repo)
+.nix-profile
+.nix-channels
+
+# User-specific secrets (if any)
+*.secret
+*.key
+*.pem
+
+# Backup files
+*.bak
+*.swp
+*~
+
+# Optional: ignore logs
+*.log
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
