@@ -161,8 +161,7 @@ services.tlp = {
     CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
     CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
 
-    # Charging thresholds (if supported)
-    START_CHARGE_THRESH_BAT0 = 40;
+    # Charging thresholds
     STOP_CHARGE_THRESH_BAT0 = 80;
   };
 };
