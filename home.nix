@@ -1,10 +1,17 @@
-{ config, lib, pkgs, pkgs-unstable, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  pkgs-unstable,
+  inputs,
+  ...
+}:
 
 let
   # Shared VS Code settings for all profiles
   sharedVSCodeSettings = {
     "workbench.colorTheme" = "Catppuccin Mocha";
-    "workbench.iconTheme"  = "catppuccin-icons";
+    "workbench.iconTheme" = "catppuccin-icons";
 
     "editor.fontFamily" = "JetBrainsMono Nerd Font";
     "editor.fontSize" = 14;
@@ -34,7 +41,7 @@ in
   ###############################
   programs.git = {
     enable = true;
-    userName  = "DotDev262";
+    userName = "DotDev262";
     userEmail = "dotdev262@gmail.com";
 
     extraConfig = {
@@ -180,4 +187,3 @@ in
     pkgs-unstable.devbox
   ];
 }
-

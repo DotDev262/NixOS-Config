@@ -21,54 +21,62 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, nix-vscode-extensions, libfprint-10a5, ... }@inputs:
-  let
-    system = "x86_64-linux";
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      nix-flatpak,
+      nix-vscode-extensions,
+      libfprint-10a5,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
 
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true; 
-      overlays = [ nix-vscode-extensions.overlays.default ];
-    };
-
-    pkgs-unstable = import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit system pkgs;
-
-      specialArgs = {
-        inherit pkgs-unstable inputs;
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ nix-vscode-extensions.overlays.default ];
       };
 
-      modules = [
-        ./configuration.nix
-        nix-flatpak.nixosModules.nix-flatpak
-        "${libfprint-10a5}/fprintd.nix"
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system pkgs;
 
-        # Home Manager
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
+        specialArgs = {
+          inherit pkgs-unstable inputs;
+        };
 
-          home-manager.extraSpecialArgs = {
-    inherit inputs pkgs-unstable;
-  };
+        modules = [
+          ./configuration.nix
+          nix-flatpak.nixosModules.nix-flatpak
+          "${libfprint-10a5}/fprintd.nix"
 
-home-manager.users.aryan = {
-  imports = [ ./home.nix ];
-};
+          # Home Manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
 
+            home-manager.extraSpecialArgs = {
+              inherit inputs pkgs-unstable;
+            };
 
-          home-manager.backupFileExtension = "backup";
-        }
-      ];
+            home-manager.users.aryan = {
+              imports = [ ./home.nix ];
+            };
+
+            home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
+
     };
-
-    formatter.${system} = pkgs.nixpkgs-fmt;
-  };
 }
-
