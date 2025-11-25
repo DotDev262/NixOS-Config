@@ -67,6 +67,8 @@ home-manager.users.aryan = {
         }
       ];
     };
+
+    formatter.${system} = pkgs.nixpkgs-fmt;
   };
 }
 
