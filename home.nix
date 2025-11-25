@@ -172,6 +172,7 @@ in
     papers
     nil
     onlyoffice-desktopeditors
+    aria2
 
     # Unstable
     pkgs-unstable.obsidian
