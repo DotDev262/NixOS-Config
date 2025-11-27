@@ -95,6 +95,17 @@
       #  thunderbird
     ];
   };
+  
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.libinput.enable = true;
+  hardware.enableAllFirmware = true;
+  boot.kernelParams = [
+  "amdgpu.dc=1"
+];
+
+boot.kernelPackages = pkgs.linuxPackages_latest;
+
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -106,6 +117,9 @@
     gnomeExtensions.alphabetical-app-grid
     gnomeExtensions.syncthing-toggle
     nixfmt-rfc-style
+    powertop
+    vulkan-loader
+  vulkan-tools
   ];
 
   environment.gnome.excludePackages = with pkgs; [
