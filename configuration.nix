@@ -49,6 +49,32 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  # Enable TLP for power saving
+  services.tlp.enable = true;
+  services.power-profiles-daemon.enable = false;
+  services.thermald.enable = true;
+
+  # Disable microphone LED (known ThinkPad bug)
+  systemd.services.disable-mic-led = {
+    description = "Disable microphone LED";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.coreutils}/bin/sh -c 'echo 0 > /sys/class/leds/platform::micmute/brightness'";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  services.tlp.settings = {
+    CPU_SCALING_GOVERNOR_ON_AC = "performance";
+    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+    CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+    CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+    START_CHARGE_THRESH_BAT0 = 40;
+    STOP_CHARGE_THRESH_BAT0 = 80;
+    WIFI_PWR_ON_BAT = 0;
+    BLUETOOTH_PWR_ON_BAT = 0;
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -78,19 +104,36 @@
   users.users.aryan = {
     isNormalUser = true;
     description = "Aryan";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
     #  thunderbird
-    gemini-cli-bin
     ];
   };
 
   # Install firefox.
   programs.firefox.enable = true;
 
+  # Docker - Rootless
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+    storageDriver = "overlay2";
+    autoPrune.enable = true;
+    autoPrune.dates = "weekly";
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
+  nixpkgs.config.vivaldi = {
+    proprietaryCodecs = true;
+    enableWideVine = true;
+  };
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.substituters = ["https://nix-community.cachix.org"];
+  nix.settings.trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
   # Enable automatic garbage collection and store optimization
   nix.gc = {
     automatic = true;
@@ -103,6 +146,15 @@
     dates = [ "18:00" ]; # Optimize the store daily at 6 PM
   };
 
+  # Reduce disk usage
+  nix.settings.max-jobs = "auto"; # Build packages in parallel
+  nix.settings.keep-outputs = false; # Don't keep build outputs
+  nix.settings.keep-derivations = false; # Don't keep derivations after build
+
+  # Graphics and HDMI
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
+
 
 
 
@@ -111,9 +163,9 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
-   helix
    aria2
    git
+   ffmpeg
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
