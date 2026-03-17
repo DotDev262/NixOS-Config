@@ -22,10 +22,9 @@
   home.packages = 
   (with pkgs; [
     # Packages
+    gemini-cli-bin
     nil
     git
-    htop
-    btop
     zip
     wl-clipboard
     helix
@@ -38,6 +37,24 @@
   ];
 
   dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      show-battery-percentage = true;
+    };
+    "org/gnome/settings-daemon/plugins/color" = {
+      night-light-enabled = true;
+      night-light-schedule-automatic = false;
+      night-light-schedule-from = 1080;
+      night-light-schedule-to = 360;
+    };
+    "org/gnome/settings-daemon/plugins/power" = {
+      sleep-inactive-ac-timeout = 0;
+    };
+    "org/gnome/desktop/privacy" = {
+      purge-trash = true;
+      purge-temp = true;
+      old-files-age = 30;
+    };
     "org/gnome/shell" = {
       enabled-extensions = [
         "caffeine@patapon.info"
@@ -77,6 +94,11 @@
       "--disk-cache-size=0"
       "--media-cache-size=1048576"
     ];
+  };
+
+  services.home-manager.autoExpire = {
+    enable = true;
+    timestamp = "-7 days";
   };
 
   programs.bash.enable = true;

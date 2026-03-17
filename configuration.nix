@@ -53,6 +53,23 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    gnome-characters
+    gnome-maps
+    gnome-weather
+    epiphany
+    cheese
+    simple-scan
+    brasero
+    gnome-logs
+    gnome-contacts
+    gnome-connections
+    gnome-music
+    gnome-user-docs
+    yelp
+  ];
+
   # Enable TLP for power saving
   services.tlp.enable = true;
   services.power-profiles-daemon.enable = false;
