@@ -164,17 +164,26 @@
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
+  # Bluetooth - off by default
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = false;
+  hardware.bluetooth.settings = {
+    General = {
+      AutoEnable = false;
+    };
+  };
+
 
 
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
    aria2
    git
    ffmpeg
+   nil
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

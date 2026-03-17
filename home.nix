@@ -16,18 +16,19 @@
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
   # The programs you want to install and manage with Home Manager.
-  programs.home-manager.enable = true; # Enable home-manager CLI
+  programs.home-manager.enable = true;
 
+  # Enable nil (Nix LSP)
   home.packages = 
   (with pkgs; [
     # Packages
+    nil
     git
     htop
     btop
     zip
     wl-clipboard
     helix
-    vivaldi
     nerd-fonts.jetbrains-mono
     gnomeExtensions.caffeine
     gnomeExtensions.alphabetical-app-grid
@@ -42,18 +43,14 @@
         "caffeine@patapon.info"
         "alphabetical-app-grid@stuarthayhurst.shell-extension"
       ];
+      favorite-apps = [
+        "vivaldi-stable.desktop"
+        "org.gnome.Nautilus.desktop"
+        "firefox.desktop"
+      ];
     };
     "org/gnome/shell/extensions/caffeine" = {
       show-notifications = true;
-    };
-    "org/gnome/desktop/docking" = {
-      show-favorite-apps = true;
-      favorite-apps = [
-        "zen-browser_zen-browser.desktop"
-        "vivaldi-vivaldi.desktop"
-        "org.gnome.Nautilus.desktop"
-        "firefox_firefox.desktop"
-      ];
     };
   };
 
