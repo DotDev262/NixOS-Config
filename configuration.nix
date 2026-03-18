@@ -14,6 +14,7 @@
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot";
   };
+  boot.kernelParams = [ "amd_pstate=active" "amdgpu.dcfeaturemask=0x8" ];
 
   # Networking
   networking = {
@@ -68,7 +69,7 @@
       RUNTIME_PM_ON_BAT = "auto";
       SATA_LINKPWR_ON_BAT = "med_power_with_dipm";
 
-      START_CHARGE_THRESH_BAT0 = 40;
+      START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 80;
       WIFI_PWR_ON_BAT = 1;
       BLUETOOTH_PWR_ON_BAT = 1;
