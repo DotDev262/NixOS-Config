@@ -209,13 +209,21 @@
     scheduler = "scx_rustland";
   };
   programs.ccache.enable = true;
+  services.fwupd.enable = true;
 
   # Hardware
   services.fstrim.enable = true;
   systemd.services.systemd-backlight.wantedBy = lib.mkForce [ ];
   hardware = {
     cpu.amd.updateMicrocode = true;
-    graphics = { enable = true; enable32Bit = true; };
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        libva-vdpau-driver
+        libvdpau-va-gl
+      ];
+    };
     bluetooth = {
       enable = true;
       powerOnBoot = false;
