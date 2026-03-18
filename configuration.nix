@@ -138,6 +138,7 @@
   };
   security.rtkit.enable = true;
   security.polkit.enable = true;
+  security.apparmor.enable = true;
   security.protectKernelImage = true;
   security.unprivilegedUsernsClone = true;
   security.allowUserNamespaces = true;
@@ -194,6 +195,13 @@
   nix.optimise = {
     automatic = true;
     dates = [ "18:00" ];
+  };
+
+  # Performance
+  services.ananicy = {
+    enable = true;
+    package = pkgs.ananicy-cpp;
+    rulesProvider = pkgs.ananicy-rules-resources;
   };
 
   # Resource limits to prevent OOM
