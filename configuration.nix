@@ -174,16 +174,28 @@
     max-jobs = "auto";
     keep-outputs = false;
     keep-derivations = false;
+    extra-sandbox-paths = [ config.programs.ccache.cacheDir ];
+  };
+  nix.gc = {
+    automatic = false;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
   };
   programs.nh = {
     enable = true;
     clean.enable = true;
-    clean.extraArgs = "--keep-since 7d --keep 3";
+    clean.extraArgs = "--keep 3 --keep-since 7d";
     flake = "/home/aryan/nixos-config";
   };
   nix.optimise = {
     automatic = true;
     dates = [ "18:00" ];
+  };
+
+  # Resource limits to prevent OOM
+  systemd.services.nix-daemon.serviceConfig = {
+    MemoryHigh = "10G";
+    MemoryMax = "12G";
   };
 
   # Optimizations
@@ -192,6 +204,11 @@
     SystemMaxUse=50M
     RuntimeMaxUse=10M
   '';
+  services.scx = {
+    enable = true;
+    scheduler = "scx_rustland";
+  };
+  programs.ccache.enable = true;
 
   # Hardware
   services.fstrim.enable = true;
