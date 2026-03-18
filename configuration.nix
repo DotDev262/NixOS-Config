@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -61,14 +61,22 @@
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+
+      CPU_BOOST_ON_BAT = 0;
+      PLATFORM_PROFILE_ON_BAT = "low-power";
+      PCIE_ASPM_ON_BAT = "powersave";
+      RUNTIME_PM_ON_BAT = "auto";
+      SATA_LINKPWR_ON_BAT = "med_power_with_dipm";
+
       START_CHARGE_THRESH_BAT0 = 40;
       STOP_CHARGE_THRESH_BAT0 = 80;
-      WIFI_PWR_ON_BAT = 0;
-      BLUETOOTH_PWR_ON_BAT = 0;
+      WIFI_PWR_ON_BAT = 1;
+      BLUETOOTH_PWR_ON_BAT = 1;
     };
   };
   services.power-profiles-daemon.enable = false;
   services.thermald.enable = true;
+  powerManagement.powertop.enable = true;
 
   # Microphone LED fix (ThinkPad)
   systemd.services.disable-mic-led = {
@@ -79,6 +87,35 @@
     };
     wantedBy = [ "multi-user.target" ];
     after = [ "systemd-logind.service" ];
+  };
+
+  # Backlight control on suspend/resume - prevents backlight from turning on after resume
+  systemd.services.backlight-suspend-handler = {
+    description = "Handle backlight on suspend/resume";
+    wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target" ];
+    after = [ "systemd-suspend.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c '
+        BACKLIGHT_PATH=/sys/class/backlight/amdgpu_bl1
+        SAVED_BRIGHTNESS_FILE=/var/lib/backlight-saved
+        
+        # On suspend: save current brightness
+        if [ -f \"$BACKLIGHT_PATH/brightness\" ]; then
+          cat \"$BACKLIGHT_PATH/brightness\" > \"$SAVED_BRIGHTNESS_FILE\"
+        fi
+      '";
+      ExecStopPost = "${pkgs.bash}/bin/bash -c '
+        BACKLIGHT_PATH=/sys/class/backlight/amdgpu_bl1
+        SAVED_BRIGHTNESS_FILE=/var/lib/backlight-saved
+        
+        # On resume: restore saved brightness
+        if [ -f \"$SAVED_BRIGHTNESS_FILE\" ] && [ -f \"$BACKLIGHT_PATH/brightness\" ]; then
+          SAVED=$(cat \"$SAVED_BRIGHTNESS_FILE\")
+          echo \"$SAVED\" > \"$BACKLIGHT_PATH/brightness\" 2>/dev/null || true
+        fi
+      '";
+    };
   };
 
   services.udev.extraRules = ''
@@ -149,8 +186,16 @@
     dates = [ "18:00" ];
   };
 
+  # Optimizations
+  zramSwap.enable = true;
+  services.journald.extraConfig = ''
+    SystemMaxUse=50M
+    RuntimeMaxUse=10M
+  '';
+
   # Hardware
   services.fstrim.enable = true;
+  systemd.services.systemd-backlight.wantedBy = lib.mkForce [ ];
   hardware = {
     cpu.amd.updateMicrocode = true;
     graphics = { enable = true; enable32Bit = true; };

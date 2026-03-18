@@ -16,6 +16,11 @@
   home.homeDirectory = "/home/aryan";
   home.stateVersion = "25.11";
 
+  home.sessionVariables = {
+    ANI_CLI_PLAYER = "mpv";
+    ANI_CLI_SKIP_INTRO = "1";
+  };
+
   programs.home-manager.enable = true;
 
   sops = {

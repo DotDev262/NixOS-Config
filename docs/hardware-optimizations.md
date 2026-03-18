@@ -4,7 +4,16 @@ Your NixOS configuration includes specialized optimizations for your Lenovo Thin
 
 ## **AMD Optimizations**
 - **`hardware.cpu.amd.updateMicrocode`**: Ensures your AMD CPU receives the latest microcode updates for stability and performance.
-- **Power Management**: Custom TLP settings for power-saving, `thermald` for cooling, and a specialized `udev` fix for the microphone LED.
+- **Power Management**: 
+    - **TLP**: Custom settings for aggressive power-saving on battery, including:
+        - Disabled CPU boost on battery.
+        - `low-power` platform profile on battery.
+        - PCIe ASPM set to `powersave`.
+        - `auto` runtime power management.
+        - WiFi and Bluetooth power saving enabled.
+    - **Powertop**: Automatic tuning enabled for low-level optimizations.
+    - **Thermald**: Configured for cooling management.
+    - **Microphone LED**: Specialized `udev` fix for the ThinkPad microphone LED.
 
 ---
 
