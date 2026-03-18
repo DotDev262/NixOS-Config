@@ -1,4 +1,4 @@
-{ config, pkgs, zen-browser, ... }:
+{ config, pkgs, zen-browser, username, homeDirectory, ... }:
 
 {
   imports = [
@@ -12,8 +12,8 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  home.username = "aryan";
-  home.homeDirectory = "/home/aryan";
+  home.username = username;
+  home.homeDirectory = homeDirectory;
   home.stateVersion = "25.11";
 
   home.sessionVariables = {

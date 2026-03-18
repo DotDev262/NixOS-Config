@@ -28,6 +28,8 @@
   outputs = { self, nixpkgs, home-manager, zen-browser, catppuccin, nix-vscode-extensions, sops-nix, ... }: 
   let
     system = "x86_64-linux";
+    username = "aryan";
+    homeDirectory = "/home/aryan";
     pkgs = import nixpkgs {
       inherit system;
       overlays = [ nix-vscode-extensions.overlays.default ];
@@ -39,6 +41,7 @@
         specialArgs = {
           inherit self;
           inherit sops-nix;
+          inherit username homeDirectory;
         };
         modules = [
           ./configuration.nix
@@ -49,12 +52,13 @@
     };
 
     homeConfigurations = {
-      aryan = home-manager.lib.homeManagerConfiguration {
+      "${username}" = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgs;
         extraSpecialArgs = {
           inherit self;
           inherit zen-browser;
           inherit sops-nix;
+          inherit username homeDirectory;
         };
         modules = [ 
           ./home.nix 
