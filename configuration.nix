@@ -201,7 +201,6 @@
   services.ananicy = {
     enable = true;
     package = pkgs.ananicy-cpp;
-    rulesProvider = pkgs.ananicy-rules-resources;
   };
 
   # Resource limits to prevent OOM
