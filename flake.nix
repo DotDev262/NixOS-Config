@@ -23,9 +23,13 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixGLIntel = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, ... }: 
+  outputs = { self, nixpkgs, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, nixGLIntel, ... }: 
   let
     system = "x86_64-linux";
     username = "aryan";
@@ -53,7 +57,9 @@
         inherit pkgs;
         extraSpecialArgs = {
           inherit self;
+          inherit system;
           inherit zen-browser;
+          inherit nixGLIntel;
           inherit username homeDirectory;
           inherit agenix;
         };

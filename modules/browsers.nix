@@ -1,4 +1,4 @@
-{ config, pkgs, zen-browser, ... }:
+{ config, pkgs, zen-browser, system, ... }:
 
 {
   programs.firefox = {
@@ -26,6 +26,7 @@
   };
 
   home.packages = [
-    zen-browser.packages.x86_64-linux.default
+    zen-browser.packages.${system}.default
+    pkgs.vivaldi-ffmpeg-codecs
   ];
 }

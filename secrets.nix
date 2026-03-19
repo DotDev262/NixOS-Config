@@ -1,7 +1,7 @@
-{ config, lib, pkgs, username, agenix, ... }:
+{ config, lib, pkgs, system, username, agenix, ... }:
 
 {
-  home.packages = [ agenix.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+  home.packages = [ agenix.packages.${system}.default ];
 
   age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
 
