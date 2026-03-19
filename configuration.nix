@@ -18,7 +18,12 @@
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot";
   };
-  boot.kernelParams = [ "amd_pstate=active" "amdgpu.dcfeaturemask=0x8" ];
+  boot.kernelParams = [ 
+    "amd_pstate=active" 
+    "amdgpu.dcfeaturemask=0x8"
+    "mem_sleep_default=s2idle"
+    "nvme.noacpi=1"
+  ];
 
   # Networking
   networking = {
@@ -75,8 +80,8 @@
 
       START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 80;
-      WIFI_PWR_ON_BAT = 1;
-      BLUETOOTH_PWR_ON_BAT = 1;
+      WIFI_PWR_ON_BAT = 0;
+      BLUETOOTH_PWR_ON_BAT = 0;
     };
   };
   services.power-profiles-daemon.enable = false;

@@ -4,10 +4,13 @@
   home.packages = with pkgs; [
     # Core Utilities
     gemini-cli-bin
+    asciinema
     zip
     p7zip
     wl-clipboard
     nerd-fonts.jetbrains-mono
+    overpass
+    rubik
     ente-auth
     jq
     yq
@@ -18,7 +21,6 @@
 
     # Academic & Productivity
     zotero
-    obsidian
     onlyoffice-desktopeditors
     papers
     pandoc
@@ -40,5 +42,8 @@
     fzf
     distrobox
     yaak
+    libnotify
+    nvd
+    util-linux
   ];
 }
