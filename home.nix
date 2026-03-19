@@ -49,8 +49,6 @@
     };
     functions = {
       sudopath = "sudo env \"PATH=$PATH\" $argv";
-      yay = "PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin /usr/bin/yay $argv";
-      paru = "PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin /usr/bin/paru $argv";
     };
     interactiveShellInit = ''
       set -g fish_greeting
@@ -62,8 +60,6 @@
 
   programs.bash.shellAliases = {
     hms = "home-manager switch -b backup";
-    yay = "PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin /usr/bin/yay \"$@\"";
-    paru = "PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin /usr/bin/paru \"$@\"";
   };
 
   fonts.fontconfig.enable = true;
