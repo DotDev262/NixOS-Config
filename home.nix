@@ -43,13 +43,18 @@
 
   programs.fish = {
     enable = true;
-    interactiveShellInit = "set -g fish_greeting";
     shellAliases = {
       hms = "cd /home/aryan/nixos-config && $HOME/.nix-profile/bin/home-manager switch --flake .#aryan -b backup";
     };
     functions = {
       sudopath = "sudo env \"PATH=$PATH\" $argv";
     };
+    interactiveShellInit = ''
+      set -g fish_greeting
+      if test -f /run/user/(id -u)/agenix/gh-token
+        set -gx GH_TOKEN (cat /run/user/(id -u)/agenix/gh-token)
+      end
+    '';
   };
 
   programs.bash.shellAliases = {

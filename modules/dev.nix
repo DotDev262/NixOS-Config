@@ -114,6 +114,11 @@
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
 
+      # Set GH_TOKEN from agenix secret
+      if [ -f "/run/user/$(id -u)/agenix/gh-token" ]; then
+        export GH_TOKEN=$(cat "/run/user/$(id -u)/agenix/gh-token")
+      fi
+
       # Nix Helper flake path
       export NH_FLAKE="${config.home.homeDirectory}/nixos-config"
     '';
