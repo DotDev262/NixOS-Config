@@ -20,7 +20,7 @@
     zotero
     obsidian
     onlyoffice-desktopeditors
-    gnome.papers
+    papers
     pandoc
     marksman
     glow
