@@ -138,7 +138,6 @@
     eza
     helix
     # Language Tools
-    python3
     openjdk
     gcc
     typst
