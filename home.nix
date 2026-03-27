@@ -1,4 +1,4 @@
-{ config, lib, pkgs, system, nixGLIntel, username, homeDirectory, ... }:
+{ config, lib, pkgs, system, nixGL, username, homeDirectory, ... }:
 
 {
   imports = [
@@ -6,7 +6,7 @@
     ./modules/activation.nix
     ./modules/shell.nix
     ./modules/productivity.nix
-    ./modules/gnome.nix
+    # ./modules/gnome.nix
     ./modules/browsers.nix
     ./modules/dev.nix
     ./modules/services.nix
@@ -19,7 +19,7 @@
   home.stateVersion = "25.11";
 
   home.packages = [
-    nixGLIntel.packages.${system}.nixGLIntel
+    nixGL.packages.${system}.nixGLIntel
   ];
 
   nixpkgs.config.allowUnfree = true;

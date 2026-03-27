@@ -38,12 +38,9 @@
     # System Monitoring & Management
     fastfetch
     btop
-    bottom
-    fzf
     distrobox
     yaak
     libnotify
     nvd
-    util-linux
   ];
 }

@@ -23,19 +23,23 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixGLIntel = {
+    nixGL = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, nixGLIntel, ... }: 
+  outputs = { self, nixpkgs, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, nixGL, ... }: 
   let
     system = "x86_64-linux";
     username = "aryan";
     homeDirectory = "/home/aryan";
     pkgs = import nixpkgs {
       localSystem = system;
+      config = {
+        allowUnfree = true;
+        vivaldi = { proprietaryCodecs = true; enableWideVine = true; };
+      };
       overlays = [ nix-vscode-extensions.overlays.default ];
     };
   in {
@@ -59,7 +63,7 @@
           inherit self;
           inherit system;
           inherit zen-browser;
-          inherit nixGLIntel;
+          inherit nixGL;
           inherit username homeDirectory;
           inherit agenix;
         };

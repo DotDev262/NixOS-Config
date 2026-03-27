@@ -130,12 +130,9 @@
   home.packages = with pkgs; [
     libsecret
     nil
-    git
-    gh
     ripgrep
     fd
     eza
-    helix
     # Language Tools
     openjdk
     gcc

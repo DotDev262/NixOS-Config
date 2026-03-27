@@ -65,5 +65,7 @@
     gnomeExtensions.caffeine
     gnomeExtensions.alphabetical-app-grid
     gnomeExtensions.pano
+    libgda5
+    gsound
   ];
 }

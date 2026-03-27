@@ -172,10 +172,6 @@
   };
 
   # Nix
-  nixpkgs.config = {
-    allowUnfree = true;
-    vivaldi = { proprietaryCodecs = true; enableWideVine = true; };
-  };
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     substituters = [
@@ -202,18 +198,6 @@
   nix.optimise = {
     automatic = true;
     dates = [ "18:00" ];
-  };
-
-  # Performance
-  services.ananicy = {
-    enable = true;
-    package = pkgs.ananicy-cpp;
-  };
-
-  # Resource limits to prevent OOM
-  systemd.services.nix-daemon.serviceConfig = {
-    MemoryHigh = "10G";
-    MemoryMax = "12G";
   };
 
   # Optimizations
@@ -252,9 +236,7 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    wget aria2 git ffmpeg nil
-    libgda5 gsound gnomeExtensions.pano
-    fprintd
+    wget aria2 ffmpeg util-linux
   ];
 
   system.stateVersion = "25.11";
