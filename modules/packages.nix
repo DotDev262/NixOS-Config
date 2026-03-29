@@ -26,6 +26,7 @@
     pandoc
     marksman
     glow
+    ltex-ls-plus
 
     # Media & Entertainment
     mpv

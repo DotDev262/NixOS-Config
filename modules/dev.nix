@@ -52,7 +52,37 @@
     profiles.typst = {
       extensions = with pkgs.vscode-marketplace; [
         myriad-dreamin.tinymist
+        ltex-plus.vscode-ltex-plus
       ];
+      userSettings = {
+        "ltex.enabled" = [ "bibtex" "context" "latex" "markdown" "typst" ];
+        "ltex.language" = "en-US";
+        "ltex.path" = "${pkgs.ltex-ls-plus}/bin/ltex-ls-plus";
+        "ltex.ltex-ls.path" = "${pkgs.ltex-ls-plus}";
+        "ltex.dictionary" = {
+          "en-US" = [
+            "Typst"
+            "LSP"
+            "Tinymist"
+            "LTeX"
+            "nixpkgs"
+            "home-manager"
+            "dotfiles"
+            # Add your technical/research terms here
+          ];
+        };
+        "ltex.disabledRules" = {
+          "en-US" = [
+            "PROOFER_ADDED_SYMBOL" # Sometimes flags Typst symbols
+            "MORFOLOGIK_RULE_EN_US" # Too strict for some technical terms
+          ];
+        };
+        "ltex.hiddenFalsePositives" = {
+          "en-US" = [
+             # Add specific recurring false positive IDs here
+          ];
+        };
+      };
     };
   };
 
