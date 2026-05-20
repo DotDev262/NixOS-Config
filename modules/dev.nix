@@ -173,6 +173,5 @@
     alejandra
     pre-commit
     devenv
-    opencode
   ];
 }

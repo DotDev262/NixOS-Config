@@ -7,7 +7,8 @@ let
     src = catppuccin.packages.x86_64-linux.vscode.src;
     pnpmWorkspaces = [ "catppuccin-vsc" ];
     fetcherVersion = 3;
-    hash = "sha256-a1er5btH6aYRnKgpyW1UU8fgsuZZO72+/JkYSMaYKSg=";
+    pnpm = pkgs.pnpm_10;
+    hash = "sha256-DE0mHkBlV0RkrEmtIXnzKaiXOK8vgcCx3z7b49zzBhc=";
   };
 in
 {

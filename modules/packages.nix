@@ -3,7 +3,6 @@
 {
   home.packages = with pkgs; [
     # Core Utilities
-    gemini-cli-bin
     asciinema
     zip
     p7zip
@@ -37,7 +36,7 @@
     #gapless
 
     # System Monitoring & Management
-    fastfetch
+    # (fastfetch.override { enlightenmentSupport = false; })
     rtk
 #    btop
     #distrobox
