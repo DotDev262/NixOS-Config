@@ -17,6 +17,7 @@
     ncdu
     netcat-gnu
     httpie
+    ventoy-full
 
     # Academic & Productivity
     #zotero

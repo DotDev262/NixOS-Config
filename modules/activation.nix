@@ -7,7 +7,7 @@
 }: {
   # Ensure Hyprland/End-4 picks up Home Manager applications
   home.file.".config/hypr/custom/env.conf".text = ''
-    env = PATH,${homeDirectory}/.nix-profile/bin:${homeDirectory}/.local/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:$PATH
+    env = PATH,${homeDirectory}/.nix-profile/bin:${homeDirectory}/.local/bin:${homeDirectory}/.opencode/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:$PATH
     env = XDG_DATA_DIRS,${homeDirectory}/.nix-profile/share:/usr/local/share:/usr/share
     env = TERMINAL,kitty
   '';

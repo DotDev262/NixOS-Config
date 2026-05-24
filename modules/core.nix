@@ -15,7 +15,7 @@
     ]);
   };
 
-  home.sessionPath = [ "$HOME/.local/bin" ];
+  home.sessionPath = [ "${homeDirectory}/.local/bin" "${homeDirectory}/.opencode/bin" ];
 
   programs.home-manager.enable = true;
 

@@ -24,6 +24,8 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.extraAllowUnfreePackages = [ "ventoy-full" ];
+  nixpkgs.config.permittedInsecurePackages = [ "ventoy-1.1.12" "ventoy-gtk3-1.1.12" ];
   nixpkgs.config.vivaldi = {
     proprietaryCodecs = true;
     enableWideVine = true;

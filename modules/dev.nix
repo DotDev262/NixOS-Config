@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-stable,
   ...
 }: {
   programs.helix = {
@@ -19,7 +20,7 @@
     package = pkgs.vscode;
     mutableExtensionsDir = false;
     profiles.default = {
-      extensions = with pkgs.vscode-marketplace; [
+      extensions = with pkgs-stable.vscode-marketplace; [
         eamodio.gitlens
         christian-kohler.path-intellisense
       ];
@@ -31,7 +32,7 @@
       };
     };
     profiles.python = {
-      extensions = with pkgs.vscode-marketplace; [
+      extensions = with pkgs-stable.vscode-marketplace; [
         ms-python.python
         ms-python.vscode-pylance
         charliermarsh.ruff
@@ -42,17 +43,12 @@
       };
     };
     profiles.java = {
-      extensions = with pkgs.vscode-marketplace; [
+      extensions = with pkgs-stable.vscode-marketplace; [
         vscjava.vscode-java-pack
       ];
     };
-    profiles.c-lex = {
-      extensions = with pkgs.vscode-marketplace; [
-        ms-vscode.cpptools
-      ];
-    };
     profiles.typst = {
-      extensions = with pkgs.vscode-marketplace; [
+      extensions = with pkgs-stable.vscode-marketplace; [
         myriad-dreamin.tinymist
         ltex-plus.vscode-ltex-plus
       ];
@@ -161,8 +157,6 @@
     fd
     eza
     # Language Tools
-    openjdk
-    gcc
     typst
 
     # New CLI Tools

@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +18,7 @@
     };
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     agenix = {
       url = "github:ryantm/agenix";
@@ -33,7 +34,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, nixGL, rtk-nix, ... }: 
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, nixGL, rtk-nix, ... }: 
   let
     system = "x86_64-linux";
     username = "aryan";
@@ -44,7 +45,12 @@
         allowUnfree = true;
         vivaldi = { proprietaryCodecs = true; enableWideVine = true; };
       };
-      overlays = [ nix-vscode-extensions.overlays.default rtk-nix.overlays.default ];
+      overlays = [ rtk-nix.overlays.default ];
+    };
+    pkgs-stable = import nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+      overlays = [ nix-vscode-extensions.overlays.default ];
     };
   in {
     nixosConfigurations = {
@@ -68,6 +74,7 @@
           inherit system;
           inherit zen-browser;
           inherit nixGL;
+          inherit pkgs-stable;
           inherit username homeDirectory;
           inherit agenix;
           inherit catppuccin;
