@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +18,7 @@
     };
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix = {
       url = "github:ryantm/agenix";
@@ -53,18 +53,18 @@
       overlays = [ nix-vscode-extensions.overlays.default ];
     };
   in {
-    nixosConfigurations = {
-      thinkpad-E14 = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        specialArgs = {
-          inherit self;
-          inherit username homeDirectory;
-        };
-        modules = [
-          ./configuration.nix
-        ];
-      };
-    };
+    # nixosConfigurations = {
+    #   thinkpad-E14 = nixpkgs.lib.nixosSystem {
+    #     inherit pkgs;
+    #     specialArgs = {
+    #       inherit self;
+    #       inherit username homeDirectory;
+    #     };
+    #     modules = [
+    #       ./configuration.nix
+    #     ];
+    #   };
+    # };
 
     homeConfigurations = {
       "${username}" = home-manager.lib.homeManagerConfiguration {

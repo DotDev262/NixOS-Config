@@ -14,6 +14,7 @@ in
 {
   catppuccin = {
     enable = true;
+    autoEnable = true;
     flavor = "mocha";
     helix.enable = true;
     vscode.profiles = {

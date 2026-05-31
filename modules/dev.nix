@@ -143,6 +143,11 @@
 
       # Nix Helper flake path
       export NH_FLAKE="${config.home.homeDirectory}/nixos-config"
+
+      # llama.cpp tuned defaults for AMD iGPU
+      llama() {
+        llama-cli -t 6 --cpu-strict 1 --poll 100 --flash-attn on --no-host "$@"
+      }
     '';
     shellAliases = {
       rebuild = "nh os switch";
@@ -167,5 +172,6 @@
     alejandra
     pre-commit
     devenv
+    llama-cpp-vulkan
   ];
 }
