@@ -23,12 +23,16 @@
       extensions = with pkgs-stable.vscode-marketplace; [
         eamodio.gitlens
         christian-kohler.path-intellisense
+        catppuccin.catppuccin-vsc
+        catppuccin.catppuccin-vsc-icons
       ];
       userSettings = {
         "editor.formatOnSave" = true;
         "editor.cursorBlinking" = "phase";
         "editor.smoothScrolling" = true;
         "window.performance" = "smooth";
+        "workbench.colorTheme" = "Catppuccin Mocha";
+        "workbench.iconTheme" = "catppuccin-mocha";
       };
     };
     profiles.python = {
