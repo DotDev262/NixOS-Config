@@ -1,15 +1,13 @@
 { config, pkgs, lib, username, homeDirectory, ... }:
 
 {
-  programs.bash = {
-    enable = true;
-    profileExtra = ''
-      export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
-    '';
-    initExtra = ''
-      export XDG_DATA_DIRS="/home/aryan/.local/share:/usr/local/share:/usr/share"
-    '';
+  home.sessionVariables = {
+    BUN_INSTALL = "${homeDirectory}/.bun";
   };
+
+  home.sessionPath = [
+    "${homeDirectory}/.bun/bin"
+  ];
 
   programs.fish = {
     enable = true;
@@ -17,8 +15,8 @@
       hm = "cd /home/aryan/nixos-config && $HOME/.nix-profile/bin/home-manager switch --flake .#aryan -b backup";
     hms = "cd /home/aryan/nixos-config && nh home switch --backup-extension backup";
       hmn = "home-manager news --flake /home/aryan/nixos-config#aryan";
-      zen = "nixGLIntel zen";
-      vivaldi = "nixGLIntel vivaldi";
+      # zen = "nixGLIntel zen";
+      # vivaldi = "nixGLIntel vivaldi";
     };
     functions = {
       sudopath = "sudo env \"PATH=$PATH\" $argv";
@@ -36,8 +34,8 @@
     hm = "cd /home/aryan/nixos-config && home-manager switch --flake .#aryan -b backup";
     hms = "cd /home/aryan/nixos-config && nh home switch --backup-extension backup";
     hmn = "home-manager news --flake /home/aryan/nixos-config#aryan";
-    zen = "nixGLIntel zen";
-    vivaldi = "nixGLIntel vivaldi";
+    # zen = "nixGLIntel zen";
+    # vivaldi = "nixGLIntel vivaldi";
     arch-shell = "env -i HOME=\"$HOME\" TERM=\"$TERM\" PATH=\"/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin\" /usr/bin/bash --norc --noprofile";
   };
 }

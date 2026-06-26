@@ -15,30 +15,39 @@
     };
   };
 
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscode;
-    mutableExtensionsDir = false;
-    profiles.default = {
-      extensions = with pkgs-stable.vscode-marketplace; [
-        eamodio.gitlens
-        christian-kohler.path-intellisense
-        catppuccin.catppuccin-vsc
-        catppuccin.catppuccin-vsc-icons
-      ];
-      userSettings = {
-        "editor.formatOnSave" = true;
-        "editor.cursorBlinking" = "phase";
-        "editor.smoothScrolling" = true;
-        "window.performance" = "smooth";
-        "workbench.colorTheme" = "Catppuccin Mocha";
-        "workbench.iconTheme" = "catppuccin-mocha";
+    programs.vscode = {
+      enable = true;
+      package = pkgs.vscode;
+      mutableExtensionsDir = false;
+      profiles.default = {
+        extensions = with pkgs-stable.vscode-marketplace; [
+          eamodio.gitlens
+          christian-kohler.path-intellisense
+        ];
+        userSettings = {
+          "editor.formatOnSave" = true;
+          "editor.cursorBlinking" = "phase";
+          "editor.smoothScrolling" = true;
+          "window.performance" = "smooth";
+        };
       };
-    };
+      profiles.typescript = {
+        extensions = with pkgs-stable.vscode-marketplace; [
+          dbaeumer.vscode-eslint
+          esbenp.prettier-vscode
+          pmneo.tsimporter
+          christian-kohler.path-intellisense
+        ];
+        userSettings = {
+          "editor.formatOnSave" = true;
+          "typescript.tsdk" = "${pkgs.typescript}/lib/node_modules/typescript";
+        };
+      };
     profiles.python = {
       extensions = with pkgs-stable.vscode-marketplace; [
         ms-python.python
-        ms-python.vscode-pylance
+        # ms-python.vscode-pylance
+        ms-python.mypy-type-checker
         charliermarsh.ruff
       ];
       userSettings = {
@@ -54,37 +63,8 @@
     profiles.typst = {
       extensions = with pkgs-stable.vscode-marketplace; [
         myriad-dreamin.tinymist
-        ltex-plus.vscode-ltex-plus
       ];
-      userSettings = {
-        "ltex.enabled" = ["bibtex" "context" "latex" "markdown" "typst"];
-        "ltex.language" = "en-US";
-        "ltex.path" = "${pkgs.ltex-ls-plus}/bin/ltex-ls-plus";
-        "ltex.ltex-ls.path" = "${pkgs.ltex-ls-plus}";
-        "ltex.dictionary" = {
-          "en-US" = [
-            "Typst"
-            "LSP"
-            "Tinymist"
-            "LTeX"
-            "nixpkgs"
-            "home-manager"
-            "dotfiles"
-            # Add your technical/research terms here
-          ];
-        };
-        "ltex.disabledRules" = {
-          "en-US" = [
-            "PROOFER_ADDED_SYMBOL" # Sometimes flags Typst symbols
-            "MORFOLOGIK_RULE_EN_US" # Too strict for some technical terms
-          ];
-        };
-        "ltex.hiddenFalsePositives" = {
-          "en-US" = [
-            # Add specific recurring false positive IDs here
-          ];
-        };
-      };
+      userSettings = {};
     };
   };
 
@@ -112,7 +92,7 @@
   programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
-    pinentry.package = pkgs.pinentry-gnome3;
+    pinentry.package = pkgs.pinentry-curses;
   };
 
   programs.zoxide.enable = true;
@@ -148,11 +128,7 @@
       # Nix Helper flake path
       export NH_FLAKE="${config.home.homeDirectory}/nixos-config"
 
-      # llama.cpp tuned defaults for AMD iGPU
-      llama() {
-        llama-cli -t 6 --cpu-strict 1 --poll 100 --flash-attn on --no-host "$@"
-      }
-    '';
+      '';
     shellAliases = {
       rebuild = "nh os switch";
     };
@@ -165,6 +141,7 @@
     ripgrep
     fd
     eza
+    mypy
     # Language Tools
     typst
 
@@ -174,8 +151,9 @@
     comma
     dust
     alejandra
-    pre-commit
-    devenv
-    llama-cpp-vulkan
+    
+    (writeShellScriptBin "crush" ''
+      exec nix run github:numtide/nix-ai-tools#crush -- "$@"
+    '')
   ];
 }

@@ -24,17 +24,13 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixGL = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    rtk-nix = {
-      url = "github:hypervideo/rtk-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nixGL = {
+    #   url = "github:nix-community/nixGL";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, nixGL, rtk-nix, ... }: 
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, zen-browser, catppuccin, nix-vscode-extensions, agenix, ... }: 
   let
     system = "x86_64-linux";
     username = "aryan";
@@ -45,7 +41,7 @@
         allowUnfree = true;
         vivaldi = { proprietaryCodecs = true; enableWideVine = true; };
       };
-      overlays = [ rtk-nix.overlays.default ];
+      overlays = [ (final: prev: { rtk = final.callPackage ./pkgs/rtk { }; }) ];
     };
     pkgs-stable = import nixpkgs-stable {
       inherit system;
@@ -73,7 +69,7 @@
           inherit self;
           inherit system;
           inherit zen-browser;
-          inherit nixGL;
+          # inherit nixGL;
           inherit pkgs-stable;
           inherit username homeDirectory;
           inherit agenix;

@@ -17,7 +17,8 @@
     ncdu
     netcat-gnu
     httpie
-    ventoy-full
+    # ventoy-full
+    ventoy
 
     # Academic & Productivity
     #zotero
@@ -26,12 +27,12 @@
     pandoc
     marksman
     glow
-    ltex-ls-plus
+    # ltex-ls-plus
 
     # Media & Entertainment
     #mpv
     playerctl
-    yt-dlp
+    # yt-dlp
 #    ani-cli
 #    ani-skip
     #gapless

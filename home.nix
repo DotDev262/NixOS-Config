@@ -1,4 +1,4 @@
-{ config, lib, pkgs, system, nixGL, username, homeDirectory, ... }:
+{ config, lib, pkgs, system, username, homeDirectory, ... }:
 
 {
   imports = [
@@ -20,12 +20,12 @@
   home.stateVersion = "26.05";
 
   home.packages = [
-    nixGL.packages.${system}.nixGLIntel
+    # nixGL.packages.${system}.nixGLIntel
   ];
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.extraAllowUnfreePackages = [ "ventoy-full" ];
-  nixpkgs.config.permittedInsecurePackages = [ "ventoy-1.1.12" "ventoy-gtk3-1.1.12" ];
+  nixpkgs.config.extraAllowUnfreePackages = [ "ventoy" ];
+  nixpkgs.config.permittedInsecurePackages = [ "ventoy-1.1.12" ];
   nixpkgs.config.vivaldi = {
     proprietaryCodecs = true;
     enableWideVine = true;
